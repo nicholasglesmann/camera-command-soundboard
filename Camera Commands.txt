@@ -1,0 +1,48 @@
+Positions:
+
+Camera 1
+Camera 2
+Camera 3
+Camera 4
+
+
+
+Shot Types:
+
+Super-Close Shot
+Close Shot
+Medium Shot
+Far Shot
+Super-Far Shot
+
+
+
+Targets:
+
+Jeff
+Lead Acoustic Guitar
+Second Acoustic Guitar
+Bass
+Drums
+Red Mic
+Blue Mic
+Green Mic
+Yellow Mic
+Black Keyboard
+Blue Keyboard
+Dove
+Audience
+
+
+Directions:
+
+Slow Zoom In
+Slow Zoom Out
+Track Left
+Track Right
+Pan Left
+Pan Right
+Pan Up
+Pan Down
+Parallax Left
+Parallax Right
