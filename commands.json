@@ -1,8 +1,142 @@
 {
-    "positions": [
+    "Positions": [
         {
             "name": "Camera 1",
-            "path": "./positions/camera 1.mp3"
+            "path": "./audio/positions/camera-1.mp3"
+        },
+        {
+            "name": "Camera 2",
+            "path": "./audio/positions/camera-2.mp3"
+        },
+        {
+            "name": "Camera 3",
+            "path": "./audio/positions/camera-3.mp3"
+        },
+        {
+            "name": "Camera 4",
+            "path": "./audio/positions/camera-4.mp3"
+        }
+    ],
+    "Shot Types": [
+        {
+            "name": "Super-Close Shot",
+            "path": "./audio/shot-types/super-close-shot.mp3"
+        },
+        {
+            "name": "Close Shot",
+            "path": "./audio/shot-types/close-shot.mp3"
+        },
+        {
+            "name": "Medium Shot",
+            "path": "./audio/shot-types/medium-shot.mp3"
+        },
+        {
+            "name": "Far Shot",
+            "path": "./audio/shot-types/far-shot.mp3"
+        },
+        {
+            "name": "Super-Far Shot",
+            "path": "./audio/shot-types/super-far-shot.mp3"
+        }
+    ],
+    "Targets": [
+        {
+            "name": "Front Man",
+            "path": "./audio/targets/front-man.mp3"
+        },
+        {
+            "name": "Red Mic",
+            "path": "./audio/targets/red-mic.mp3"
+        },
+        {
+            "name": "Blue Mic",
+            "path": "./audio/targets/blue-mic.mp3"
+        },
+        {
+            "name": "Green Mic",
+            "path": "./audio/targets/green-mic.mp3"
+        },
+        {
+            "name": "Yellow Mic",
+            "path": "./audio/targets/yellow-mic.mp3"
+        },
+        {
+            "name": "Lead Acoustic Guitar",
+            "path": "./audio/targets/lead-acoustic-guitar.mp3"
+        },
+        {
+            "name": "Second Acoustic Guitar",
+            "path": "./audio/targets/second-acoustic-guitar.mp3"
+        },
+        {
+            "name": "Bass",
+            "path": "./audio/targets/bass.mp3"
+        },
+        {
+            "name": "Electric Guitar",
+            "path": "./audio/targets/electric-guitar.mp3"
+        },
+        {
+            "name": "Black Keyboard",
+            "path": "./audio/targets/black-keyboard.mp3"
+        },
+        {
+            "name": "Blue Keyboard",
+            "path": "./audio/targets/blue-keyboard.mp3"
+        },
+        {
+            "name": "Drums",
+            "path": "./audio/targets/drums.mp3"
+        },
+        {
+            "name": "Audience",
+            "path": "./audio/targets/audience.mp3"
+        },
+        {
+            "name": "Dove",
+            "path": "./audio/targets/dove.mp3"
+        }
+    ],
+    "Directions": [
+        {
+            "name": "Slow Zoom In",
+            "path": "./audio/directions/slow-zoom-in.mp3"
+        },
+        {
+            "name": "Slow Zoom Out",
+            "path": "./audio/directions/slow-zoom-out.mp3"
+        },
+        {
+            "name": "Pan Up",
+            "path": "./audio/directions/pan-up.mp3"
+        },
+        {
+            "name": "Pan Down",
+            "path": "./audio/directions/pan-down.mp3"
+        },
+        {
+            "name": "Pan Left",
+            "path": "./audio/directions/pan-left.mp3"
+        },
+        {
+            "name": "Pan Right",
+            "path": "./audio/directions/pan-right.mp3"
+        },
+        {
+            "name": "Track Left",
+            "path": "./audio/directions/track-left.mp3"
+        },
+        {
+            "name": "Track Right",
+            "path": "./audio/directions/track-right.mp3"
+        },
+        {
+            "name": "Parallax Left",
+            "path": "./audio/directions/parallax-left.mp3"
+        },
+        {
+            "name": "Parallax Right",
+            "path": "./audio/directions/parallax-right.mp3"
         }
     ]
 }
