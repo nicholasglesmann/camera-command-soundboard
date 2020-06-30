@@ -3,7 +3,7 @@ let currentVoice;
 let johnMode;
 
 let audioPlaying = false;
-let audioStack = [];
+let audioQueue = [];
 
 let inDevelopment = true;
 
@@ -22,7 +22,7 @@ let inDevelopment = true;
 window.onload = function () {
 
     // Load the JSON before building the page
-    fetch("./commands.json")
+    fetch("./commandsConfig.json")
         .then(response => response.json())
         .then(json => commandsConfig = json)
         .then(() => {
@@ -197,10 +197,10 @@ function speak(commandName, path) {
 
 function playAudio(path) {
 
-    // If audio is currently playing, put the new path into a que
+    // If audio is currently playing, put the new path into a queue
     if (audioPlaying) {
 
-        audioStack.push(path);
+        audioQueue.push(path);
 
     } else {
 
@@ -214,8 +214,8 @@ function playAudio(path) {
         commandAudio.onended = () => {
             audioPlaying = false;
 
-            if (audioStack.length > 0) {
-                playAudio(audioStack.shift());
+            if (audioQueue.length > 0) {
+                playAudio(audioQueue.shift());
             }
         };
     }
