@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* background-color: #0058A6; */
+    color: #2F2E2E;
+
+}
+
+h1 {
+    text-align: center;
+}
+
+
+.section-container {
+    margin: 1rem 0.5rem;
+}
+
+.section-heading {
+    margin: 1rem 0.5rem 0.5rem 0.5rem;
+}
+
+.command-button-container {
+    margin: 0 0.25rem;
+    display: inline-flex;
+}
+
+
+.command-button {
+    margin: 0.25rem;
+    padding: 0.75rem;
+    cursor: pointer;
+    background-color: #0058A6;
+    color: white;
+    font-size: 16px;
+    /* font-weight: bold; */
+    /* border: 1px solid #0058A6; */
+    border: none;
+    outline: none;
+    border-radius: 4px;;
+}
+
+.command-button:active {
+    background-color: white;
+    color: #0058A6;
+    border: 1px solid #0058A6;
+    box-shadow: inset -5px 5px 5px 7px rgba(0,0,0,0.1), inset 5px -5px 5px 7px rgba(0,0,0,0.1);
+}

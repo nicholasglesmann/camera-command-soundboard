@@ -3,7 +3,7 @@ let currentVoice;
 let johnMode;
 
 let audioPlaying = false;
-let audioQueue = [];
+let audioPathQueue = [];
 
 let inDevelopment = true;
 
@@ -33,38 +33,74 @@ window.onload = function () {
 
 function init() {
 
-    loadVoices();
-
     renderCommands();
+
+    let voicePickerContainer = renderVoicePicker();
+
+    loadVoices(voicePickerContainer);
 
 }
 
 
-function loadVoices() {
+function loadVoices(voicePickerContainer) {
+
+    // If speechSynthesis is not supported don't try to
+    // add voice options
+    if (!window.speechSynthesis) {
+
+        document.body.appendChild(voicePickerContainer);
+
+
+        return;
+
+    }
+
+
     // list of languages is probably not loaded, wait for it
     if (window.speechSynthesis.getVoices().length == 0) {
-        window.speechSynthesis.addEventListener('voiceschanged', renderVoicePicker);
+
+        window.speechSynthesis.addEventListener('voiceschanged', () => {
+
+            renderVoiceOptions(voicePickerContainer);
+
+        });
+
     }
     else {
+
         // languages list available, no need to wait
-        renderVoicePicker()
+        renderVoiceOptions(voicePickerContainer);
+
     }
+
 }
 
 
 function renderVoicePicker() {
 
+    let voicePickerContainer = buildSectionContainer('voice-picker', 'Voice Selection');
+
+    let johnModeSwitch = buildJohnModeSwitch();
+
+    voicePickerContainer.appendChild(johnModeSwitch);
+
+
+    return voicePickerContainer;
+
+}
+
+
+
+function renderVoiceOptions(voicePickerContainer) {
+
     // remove voices changed listener
-    window.speechSynthesis.removeEventListener('voiceschanged', renderVoicePicker);
+    window.speechSynthesis.removeEventListener('voiceschanged', renderVoiceOptions);
 
     // get all voices that browser offers
     let available_voices = window.speechSynthesis.getVoices();
 
     // set default voice to first available
     currentVoice = available_voices[0];
-
-
-    let voicePickerContainer = buildContainer('voice-picker', 'Voice Selection');
 
     let voicePicker = document.createElement('select');
 
@@ -87,18 +123,15 @@ function renderVoicePicker() {
 
     voicePickerContainer.appendChild(voicePicker);
 
-
-
-    let johnModeSwitch = buildJohnModeSwitch();
-
-    voicePickerContainer.appendChild(johnModeSwitch);
-
     document.body.appendChild(voicePickerContainer);
 
 }
 
+
+
+
 function buildJohnModeSwitch() {
-    let johnModeSwitchContainer = buildContainer('john-mode', 'John Mode');
+    let johnModeSwitchContainer = buildSectionContainer('john-mode', 'John Mode');
 
     let johnModeSwitch = document.createElement('input');
     johnModeSwitch.type = 'checkbox';
@@ -113,20 +146,21 @@ function buildJohnModeSwitch() {
     return johnModeSwitchContainer;
 }
 
-function buildContainer(id, headingText) {
+
+function buildSectionContainer(id, headingText) {
 
     let container = document.createElement('div');
     container.Id = id + '-container';
+    container.classList.add('section-container');
 
     let heading = document.createElement('h2');
     heading.innerText = headingText;
+    heading.classList.add('section-heading');
 
     container.appendChild(heading);
 
     return container;
 }
-
-
 
 
 function renderCommands() {
@@ -146,61 +180,81 @@ function renderCommands() {
 
 function buildCommandCategoryContainer(commands, commandCategory) {
 
-    let commandCategoryContainer = document.createElement('div');
-    commandCategoryContainer.id = commandCategory + '-container';
-
-    let commandCategoryHeading = document.createElement('h2');
-    commandCategoryHeading.innerText = commandCategory;
-
-    commandCategoryContainer.appendChild(commandCategoryHeading);
+    let commandCategoryContainer = buildSectionContainer(commandCategory, commandCategory);
 
     commands.forEach(command => {
 
-        let commandName = command.name;
-        let commandAudioPath = command.path;
-
-        // Create div container for the command
-        let commandContainer = document.createElement('div');
-        commandContainer.setAttribute('id', commandName);
-
-
-        // Create button to trigger command
-        let commandButton = document.createElement('button');
-        commandButton.setAttribute('value', commandName);
-        commandButton.setAttribute('data-path', commandAudioPath);
-        commandButton.onclick = (e) => {
-            let commandName = e.target.value;
-            let path = e.target.dataset.path;
-            speak(commandName, path);
-        };
-        commandButton.innerText = commandName;
+        let commandButton = createCommandButton(command);
 
         commandCategoryContainer.appendChild(commandButton);
 
-    });
+    }); // end forEach
+
 
     return commandCategoryContainer;
 
 }
 
+
+function createCommandButton(command) {
+
+    let commandName = command.name;
+    let commandAudioPath = command.path;
+
+    // Create div container for the command
+    let commandButtonContainer = document.createElement('div');
+    commandButtonContainer.setAttribute('id', commandName);
+    commandButtonContainer.classList.add('command-button-container');
+
+
+    // Create button to trigger command
+    let commandButton = document.createElement('button');
+    commandButton.setAttribute('value', commandName);
+    commandButton.setAttribute('data-path', commandAudioPath);
+    commandButton.classList.add('command-button');
+
+
+    commandButton.onclick = (e) => {
+
+        let commandName = e.target.value;
+        let path = e.target.dataset.path;
+        speak(commandName, path);
+
+    };
+
+    commandButton.innerText = commandName;
+
+    commandButtonContainer.appendChild(commandButton);
+
+
+    return commandButtonContainer;
+
+}
+
+
 function speak(commandName, path) {
+
     log(commandName);
     log(path);
 
     if (johnMode) {
+
         playAudio(path);
+
     } else {
+
         synthesizeAudio(commandName);
+
     }
+
 }
 
 
 function playAudio(path) {
 
-    // If audio is currently playing, put the new path into a queue
     if (audioPlaying) {
 
-        audioQueue.push(path);
+        audioPathQueue.push(path);
 
     } else {
 
@@ -212,13 +266,20 @@ function playAudio(path) {
         // After the audio finishes, recursively call playAudio if
         // there are other clips to be played
         commandAudio.onended = () => {
+
             audioPlaying = false;
 
-            if (audioQueue.length > 0) {
-                playAudio(audioQueue.shift());
+            if (audioPathQueue.length > 0) {
+
+                let nextPath = audioPathQueue.shift();
+                playAudio(nextPath);
+
             }
+
         };
+
     }
+
 }
 
 
@@ -237,6 +298,10 @@ function synthesizeAudio(commandName) {
 }
 
 
+
+// Console.log shortcut
 window.log = function (message) {
+
     console.log(message);
+
 }
